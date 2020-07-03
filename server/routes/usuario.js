@@ -12,7 +12,7 @@ app.get('/usuario', (req, res) => {
     let limite = req.query.limite || 5;
     limite = Number(limite)
 
-    Usuario.find({}, 'nombre role email estado')
+    Usuario.find({ estado: true }, 'nombre role email estado')
         .skip(desde)
         .limit(limite)
         .exec((err, usuarios) => {
@@ -22,7 +22,7 @@ app.get('/usuario', (req, res) => {
                     err
                 });
             }
-            Usuario.count({ google: true }, (err, conteo) => {
+            Usuario.countDocuments({ estado: true }, (err, conteo) => {
                 res.json({
                     ok: true,
                     usuarios,
@@ -77,8 +77,35 @@ app.put('/usuario/:id', (req, res) => {
     });
 });
 
-app.delete('/usuario', (req, res) => {
-    res.json("delete Usuario");
+app.delete('/usuario/:id', (req, res) => {
+    let id = req.params.id;
+    let cambiarEstado = {
+            estado: false
+        }
+        //Usuario.findByIdAndDelete(id, (err, usuarioEliminado) => {
+        //parecido a un metodo put
+    Usuario.findByIdAndUpdate(id, cambiarEstado, { new: true, context: 'query' }, (err, usuarioDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        if (!usuarioDB) {
+            res.json({
+                ok: false, //porq no fue hayado
+                err: {
+                    message: "Usuario no encontrado"
+                }
+            });
+        } else {
+            res.json({
+                ok: true,
+                usuario: usuarioDB
+            })
+        }
+
+    });
 });
 
 

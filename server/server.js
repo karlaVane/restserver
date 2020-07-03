@@ -14,7 +14,8 @@ app.use(bodyParser.json())
 app.use(require('./routes/usuario'));
 // CONEXION CON MONGODB //ver los warnings de la consola
 //ver npm mongoose-unique-validator (instalar como dependencia)
-mongoose.connect('mongodb://localhost:27017/cafe', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+//mongoose.connect('mongodb://localhost:27017/cafe', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+mongoose.connect(process.env.URLDB, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
     if (err) throw err;
     console.log('base de datos ONLINE');
 })
