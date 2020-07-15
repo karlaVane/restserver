@@ -10,8 +10,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //parse application /json
 app.use(bodyParser.json())
 
-//incluir rutas de /usuario
-app.use(require('./routes/usuario'));
+//configuracion global de las rutas
+app.use(require('./routes/index'));
+
 // CONEXION CON MONGODB //ver los warnings de la consola
 //ver npm mongoose-unique-validator (instalar como dependencia)
 //mongoose.connect('mongodb://localhost:27017/cafe', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {

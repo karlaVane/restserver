@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
-
 //clase
 let Schema = mongoose.Schema; //esquema dentro de mi base de datos (objeto)
 
@@ -43,8 +42,9 @@ let usuarioShema = new Schema({
         default: false
     }
 });
+
 //error mas lindo
-usuarioShema.plugin(uniqueValidator, { message: '{PATH} deber ser único' });
+usuarioShema.plugin(uniqueValidator, { message: '{PATH} deber ser único' }); //para que el correo sea único
 
 usuarioShema.methods.toJSON = function() {
     let user = this;
@@ -52,4 +52,5 @@ usuarioShema.methods.toJSON = function() {
     delete userObject.password;
     return userObject;
 }
+
 module.exports = mongoose.model('usuario', usuarioShema)

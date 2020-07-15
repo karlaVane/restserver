@@ -62,7 +62,6 @@ app.put('/usuario/:id', (req, res) => {
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']); //solo se pueden cambiar estos parámetros
     //delete body.password;
     //delete body.google;
-
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
@@ -98,6 +97,7 @@ app.delete('/usuario/:id', (req, res) => {
                     message: "Usuario no encontrado"
                 }
             });
+            //res.render('nombrepagina',par)
         } else {
             res.json({
                 ok: true,
